@@ -26,7 +26,7 @@ public class PlayerInteraction : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             IsInRange = true;
-            Debug.Log("Player in range");
+            //Debug.Log("Player in range");
         }
     }
 
@@ -35,7 +35,7 @@ public class PlayerInteraction : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             IsInRange = false;
-            Debug.Log("Player exit range");
+            //Debug.Log("Player exit range");
         }
     }
 }
