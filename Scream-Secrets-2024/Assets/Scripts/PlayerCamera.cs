@@ -14,7 +14,7 @@ public class PlayerCamera : MonoBehaviour
 
     void Start()
     {
-        Cursor.visible = true; // Set this to true to keep the cursor visible
+        Cursor.visible = false; // Set this to true to keep the cursor visible
         Cursor.lockState = CursorLockMode.None; // Ensure the cursor is not locked
 
         // If dont want to see the Cursor
