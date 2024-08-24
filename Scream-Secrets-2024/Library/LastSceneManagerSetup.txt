@@ -1,4 +1,5 @@
 sceneSetups:
+- path: Assets/Scenes/Justin.unity
 - path: Assets/Scenes/Paul.unity
   isLoaded: 1
   isActive: 1
