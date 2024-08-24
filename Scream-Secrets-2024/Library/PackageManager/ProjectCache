@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638600898548113580
-    m_Hash: 1979715369
+      ticks: 638601103873514529
+    m_Hash: 277179777
   m_LockFileStatus:
     m_FilePath: D:/Scream Secrets/Scream-Secrets-24/Scream-Secrets-2024/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638600898548113580
-    m_Hash: 3911843649
+      ticks: 638601103873524473
+    m_Hash: 2097146332
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
