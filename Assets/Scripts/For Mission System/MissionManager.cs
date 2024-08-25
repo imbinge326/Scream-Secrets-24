@@ -34,13 +34,13 @@ public class MissionManager : MonoBehaviour
     {
         // Day 1
         Day day1 = new Day { dayName = "Day 1" };
-        Mission walkMission1 = new Mission
+        Mission touchSphereMission1 = new Mission
         {
-            missionName = "Walk Few Steps",
-            description = "Walk a few steps to complete this mission.",
-            objectives = new List<string> { "Walk a few steps" }
+            missionName = "Touch a Sphere",
+            description = "Find and touch the sphere to complete this mission.",
+            objectives = new List<string> { "Touch a sphere" }
         };
-        day1.missions = new List<Mission> { walkMission1 };
+        day1.missions = new List<Mission> { touchSphereMission1 };
         days.Add(day1);
 
         // Day 2
