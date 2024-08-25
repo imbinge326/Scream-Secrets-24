@@ -1,11 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // Include the UI namespace
 
 public class MissionManager : MonoBehaviour
 {
     private List<Day> days = new List<Day>();
     private int currentDayIndex = 0;      // Index to track the current day
     private Day currentDay;               // Current day being processed
+
+    public Text currentMissionsText;      // Reference to the UI Text component for current missions
 
     void Start()
     {
@@ -101,6 +104,7 @@ public class MissionManager : MonoBehaviour
             currentDay = days[dayIndex];
             Debug.Log($"Starting day: {currentDay.dayName}");
             ActivateMissions(currentDay);
+            UpdateMissionUI(); // Update the mission text on UI
         }
         else
         {
@@ -134,6 +138,8 @@ public class MissionManager : MonoBehaviour
                 Debug.Log($"All missions for {currentDay.dayName} completed.");
             }
         }
+
+        UpdateMissionUI(); // Update the mission text on UI after completing a mission
     }
 
     public bool IsMissionActive(string missionName)
@@ -172,6 +178,25 @@ public class MissionManager : MonoBehaviour
         else
         {
             Debug.Log("Complete all missions before switching to the next day.");
+        }
+    }
+
+    void UpdateMissionUI()
+    {
+        if (currentMissionsText != null)
+        {
+            currentMissionsText.text = "Missions for Today:\n";
+            foreach (Mission mission in currentDay.missions)
+            {
+                if (!mission.isCompleted)
+                {
+                    currentMissionsText.text += $"- {mission.missionName}\n";
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("currentMissionsText is not assigned.");
         }
     }
 }
