@@ -3,6 +3,15 @@ using UnityEngine;
 public class MissionObject : MonoBehaviour
 {
     public string missionName; // The name of the mission this object is associated with
+    private Vector3 originalPosition;
+    private Quaternion originalRotation;
+
+    void Start()
+    {
+        // Store the original position and rotation of the object
+        originalPosition = transform.position;
+        originalRotation = transform.rotation;
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -21,6 +30,9 @@ public class MissionObject : MonoBehaviour
 
                     // Optionally, destroy the object after completing the mission
                     //Destroy(gameObject);
+
+                    // Respawn the object
+                    RespawnObject();
                 }
                 else
                 {
@@ -32,6 +44,20 @@ public class MissionObject : MonoBehaviour
                 Debug.LogWarning("MissionManager not found in the scene.");
             }
         }
+    }
+
+    void RespawnObject()
+    {
+        // Instantiate a new copy of this object at the original position and rotation
+        GameObject newObject = Instantiate(gameObject, originalPosition, originalRotation);
+
+        // Optionally, reset certain properties of the new object
+        MissionObject newMissionObject = newObject.GetComponent<MissionObject>();
+        newMissionObject.missionName = missionName; // Ensure the new object has the correct mission name
+
+        // Destroy the old object (optional)
+        Destroy(gameObject);
+
     }
 
 }

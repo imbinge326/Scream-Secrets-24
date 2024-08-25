@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ec2cd33e5e79e47b71414c7bcfe681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missionName: Touch a Sphere
+  missionName: Rub Some Balls
 --- !u!1 &193718251
 GameObject:
   m_ObjectHideFlags: 0
