@@ -24,6 +24,15 @@ public class Keypadsystem : MonoBehaviour
         {
             answer.text = "Invalid";
         }
-        Keypad.SetActive(false);
+    }
+
+    public void OnExitButtonPressed()
+    {
+        Time.timeScale = 1;
+    }
+
+    public void OnKeypadCalled()
+    {
+        Time.timeScale = 0;
     }
 }
