@@ -8,19 +8,30 @@ public class MissionObject : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Assuming the player has a tag "Player" and interacts with the object
+            // Find the MissionManager in the scene
             MissionManager missionManager = FindObjectOfType<MissionManager>();
             if (missionManager != null)
             {
-                missionManager.CompleteMission(missionName);
-            }
+                // Check if the mission is part of the current day's missions
+                if (missionManager.IsMissionActive(missionName))
+                {
+                    // Complete the mission
+                    missionManager.CompleteMission(missionName);
+                    Debug.Log($"Mission '{missionName}' completed by player.");
 
+                    // Optionally, destroy the object after completing the mission
+                    //Destroy(gameObject);
+                }
+                else
+                {
+                    Debug.LogWarning($"Mission '{missionName}' is not available on the following day");
+                }
+            }
+            else
             {
-                Debug.Log("Player detected");
+                Debug.LogWarning("MissionManager not found in the scene.");
             }
-
-            // Optionally, you can destroy the object after completing the mission
-            Destroy(gameObject);
         }
     }
+
 }

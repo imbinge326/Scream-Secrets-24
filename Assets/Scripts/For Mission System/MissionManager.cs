@@ -32,56 +32,66 @@ public class MissionManager : MonoBehaviour
 
     void InitializeMissions()
     {
-        // Day 1
-        Day day1 = new Day { dayName = "Day 1" };
-        Mission touchSphereMission1 = new Mission
+        // Initialize missions for each day
+        InitializeDay("Day 1", new List<Mission>
         {
-            missionName = "Touch a Sphere",
-            description = "Find and touch the sphere to complete this mission.",
-            objectives = new List<string> { "Touch a sphere" }
-        };
-        day1.missions = new List<Mission> { touchSphereMission1 };
-        days.Add(day1);
+            new Mission
+            {
+                missionName = "Go To Bed",
+                description = "You're tired so why not?",
+                objectives = new List<string> { "Sleep" },
+                isCompleted = false
+            }
+        });
 
-        // Day 2
-        Day day2 = new Day { dayName = "Day 2" };
-        Mission walkMission2 = new Mission
+        InitializeDay("Day 2", new List<Mission>
         {
-            missionName = "Walk Few Steps",
-            description = "Walk a few steps to complete this mission.",
-            objectives = new List<string> { "Walk a few steps" }
-        };
-        Mission lookAroundMission = new Mission
-        {
-            missionName = "Look Around",
-            description = "Look around to observe your surroundings.",
-            objectives = new List<string> { "Look around" }
-        };
-        day2.missions = new List<Mission> { walkMission2, lookAroundMission };
-        days.Add(day2);
+            new Mission
+            {
+                missionName = "Rub Some Balls",
+                description = "You are too lonely, make friends with an inaminate object.",
+                objectives = new List<string> { "Rub Some Balls" },
+                isCompleted = false
+            },
+            new Mission
+            {
+                missionName = "Go To Bed",
+                description = "You're tired so why not?",
+                objectives = new List<string> { "Go To Bed" },
+                isCompleted = false
+            }
+        });
 
-        // Day 3
-        Day day3 = new Day { dayName = "Day 3" };
-        Mission walkMission3 = new Mission
+        InitializeDay("Day 3", new List<Mission>
         {
-            missionName = "Walk Few Steps",
-            description = "Walk a few steps to complete this mission.",
-            objectives = new List<string> { "Walk a few steps" }
-        };
-        Mission lookAroundMission3 = new Mission
-        {
-            missionName = "Look Around",
-            description = "Look around to observe your surroundings.",
-            objectives = new List<string> { "Look around" }
-        };
-        Mission touchSphereMission = new Mission
-        {
-            missionName = "Touch a Sphere",
-            description = "Find and touch the sphere to complete the mission.",
-            objectives = new List<string> { "Touch a sphere" }
-        };
-        day3.missions = new List<Mission> { walkMission3, lookAroundMission3, touchSphereMission };
-        days.Add(day3);
+            new Mission
+            {
+                missionName = "Talk To Stranger",
+                description = "Time to face the real thing.",
+                objectives = new List<string> { "Talk To Stranger" },
+                isCompleted = false
+            },
+            new Mission
+            {
+                missionName = "Rub Some Balls",
+                description = "You are too lonely, make friends with an inaminate object.",
+                objectives = new List<string> { "Rub Some Balls" },
+                isCompleted = false
+            },
+            new Mission
+            {
+                missionName = "Go To Bed",
+                description = "You're tired so why not?",
+                objectives = new List<string> { "Go To Bed" },
+                isCompleted = false
+            }
+        });
+    }
+
+    void InitializeDay(string dayName, List<Mission> missions)
+    {
+        Day day = new Day { dayName = dayName, missions = missions };
+        days.Add(day);
     }
 
     void StartDay(int dayIndex)
@@ -105,7 +115,7 @@ public class MissionManager : MonoBehaviour
             if (!mission.isCompleted)
             {
                 Debug.Log($"Mission '{mission.missionName}' is now active.");
-                // Display mission objectives, start tracking progress, etc.
+                // Display mission objectives.
             }
         }
     }
@@ -116,9 +126,21 @@ public class MissionManager : MonoBehaviour
         if (mission != null && !mission.isCompleted)
         {
             mission.isCompleted = true;
-            mission.onMissionComplete.Invoke();
             Debug.Log($"Mission '{mission.missionName}' completed.");
+
+            // Check if all missions for the current day are completed
+            if (CanSwitchDay())
+            {
+                Debug.Log($"All missions for {currentDay.dayName} completed.");
+            }
         }
+    }
+
+    public bool IsMissionActive(string missionName)
+    {
+        // Check if the mission is part of the current day's missions and is not completed
+        Mission mission = currentDay.missions.Find(m => m.missionName == missionName);
+        return mission != null && !mission.isCompleted;
     }
 
     bool CanSwitchDay()
@@ -137,6 +159,19 @@ public class MissionManager : MonoBehaviour
         else
         {
             Debug.Log("No more days left.");
+        }
+    }
+
+    //To switch days manually
+    public void TriggerNextDay()
+    {
+        if (CanSwitchDay())
+        {
+            SwitchToNextDay();
+        }
+        else
+        {
+            Debug.Log("Complete all missions before switching to the next day.");
         }
     }
 }
