@@ -9,27 +9,45 @@ public class MissionManager : MonoBehaviour
     private Day currentDay;               // Current day being processed
 
     public Text currentMissionsText;      // Reference to the UI Text component for current missions
+    public Button nextDayButton;          // Reference to the UI Button for switching the day
 
     void Start()
     {
         // Initialize the days and missions
         InitializeMissions();
         StartDay(currentDayIndex);
+
+        // Ensure the button is set up to call the TriggerNextDay method
+        if (nextDayButton != null)
+        {
+            nextDayButton.onClick.AddListener(TriggerNextDay);
+            nextDayButton.gameObject.SetActive(false);  // Hide the button initially
+        }
     }
 
     void Update()
     {
         // Allow the player to switch to the next day by pressing 'N'
-        if (Input.GetKeyDown(KeyCode.N))
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+            //if (CanSwitchDay())
+            //{
+                //SwitchToNextDay();
+            //}
+            //else
+            //{
+                //Debug.Log("Complete all missions before switching to the next day.");
+            //}
+        //}
+
+        // Show the button if all missions are completed
+        if (nextDayButton != null && CanSwitchDay())
         {
-            if (CanSwitchDay())
-            {
-                SwitchToNextDay();
-            }
-            else
-            {
-                Debug.Log("Complete all missions before switching to the next day.");
-            }
+            nextDayButton.gameObject.SetActive(true);  // Show the button when all missions are completed
+        }
+        else if (nextDayButton != null)
+        {
+            nextDayButton.gameObject.SetActive(false); // Hide the button if not all missions are completed
         }
     }
 
@@ -185,12 +203,21 @@ public class MissionManager : MonoBehaviour
     {
         if (currentMissionsText != null)
         {
-            currentMissionsText.text = "Missions for Today:\n";
-            foreach (Mission mission in currentDay.missions)
+            // Check if all missions for today are completed
+            if (CanSwitchDay())
             {
-                if (!mission.isCompleted)
+                currentMissionsText.text = "All Missions Are Completed";
+            }
+            else
+            {
+                // Display missions that are not yet completed
+                currentMissionsText.text = "Missions for Today:\n";
+                foreach (Mission mission in currentDay.missions)
                 {
-                    currentMissionsText.text += $"- {mission.missionName}\n";
+                    if (!mission.isCompleted)
+                    {
+                        currentMissionsText.text += $"- {mission.missionName}\n";
+                    }
                 }
             }
         }
