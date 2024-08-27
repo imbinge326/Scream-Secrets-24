@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Test : MonoBehaviour
@@ -13,9 +14,14 @@ public class Test : MonoBehaviour
     [SerializeField] private List<GameObject> responses;
     [SerializeField] const float RESPONSE_DELAY = 1.5f;
 
+    private TMP_Text name;
+
+
     private void Awake()
     {
         SetResponse(0);
+        name = phoneMenu.transform.Find("Antagonist Name")?.GetComponent<TMP_Text>();
+        name.text = "Name";
     }
 
     void Update()
@@ -63,6 +69,19 @@ public class Test : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             SetResponse(1);
+        }
+
+        // Initialize responses for 2nd notification (2 in notifications array) [Developer Tool]
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SetResponse(2);
+        }
+
+        // Initialize responses for 2nd notification (3 in notifications array) [Developer Tool]
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            name.text = "Unknown";
+            SetResponse(3);
         }
     }
 
