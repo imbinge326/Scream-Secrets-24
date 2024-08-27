@@ -3,7 +3,12 @@ guid: d249e71af4b712e479fed455eed659b7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Newspaper Texture02
+    second: {fileID: 2100000, guid: 1a8bb9ca863fe394d8388e3c5af59669, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
