@@ -21,7 +21,7 @@ public class Test : MonoBehaviour
     {
         SetResponse(0);
         name = phoneMenu.transform.Find("Antagonist Name")?.GetComponent<TMP_Text>();
-        name.text = "Name";
+        name.text = "Lilith";
     }
 
     void Update()
@@ -82,6 +82,13 @@ public class Test : MonoBehaviour
         {
             name.text = "Unknown";
             SetResponse(3);
+        }
+
+        // Initialize responses for 2nd notification (4 in notifications array) [Developer Tool]
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            name.text = "Lilith";
+            SetResponse(4);
         }
     }
 
