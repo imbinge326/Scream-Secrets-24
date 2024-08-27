@@ -8,9 +8,10 @@ public class Test : MonoBehaviour
     public GameObject phoneMenu;
     public GameObject notif;
 
-    [Header("Messages")]
+    [Header("Message Settings")]
     public GameObject[] notifications;
     [SerializeField] private List<GameObject> responses;
+    [SerializeField] const float RESPONSE_DELAY = 1.5f;
 
     private void Awake()
     {
@@ -71,7 +72,7 @@ public class Test : MonoBehaviour
         for (int i = 0; i < responses.Count; i++)
         {
             responses[i].SetActive(true);
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(RESPONSE_DELAY + i);
         }
     }
 
