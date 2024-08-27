@@ -5,8 +5,8 @@ using UnityEngine.UI; // Include the UI namespace
 public class MissionManager : MonoBehaviour
 {
     private List<Day> days = new List<Day>();
-    private int currentDayIndex = 0;      // Index to track the current day
-    private Day currentDay;               // Current day being processed
+    public int currentDayIndex = 0;      // Index to track the current day
+    [SerializeField] private Day currentDay;               // Current day being processed
 
     public Text currentMissionsText;      // Reference to the UI Text component for current missions
     public Button nextDayButton;          // Reference to the UI Button for switching the day
@@ -27,20 +27,23 @@ public class MissionManager : MonoBehaviour
 
     void Update()
     {
+        
         // Allow the player to switch to the next day by pressing 'N'
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-            //if (CanSwitchDay())
-            //{
-                //SwitchToNextDay();
-            //}
-            //else
-            //{
-                //Debug.Log("Complete all missions before switching to the next day.");
-            //}
-        //}
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            if (CanSwitchDay())
+            {
+                SwitchToNextDay();
+            }
+            else
+            {
+                Debug.Log("Complete all missions before switching to the next day.");
+            }
+        }
+        
 
         // Show the button if all missions are completed
+        /*
         if (nextDayButton != null && CanSwitchDay())
         {
             nextDayButton.gameObject.SetActive(true);  // Show the button when all missions are completed
@@ -49,6 +52,7 @@ public class MissionManager : MonoBehaviour
         {
             nextDayButton.gameObject.SetActive(false); // Hide the button if not all missions are completed
         }
+        */
     }
 
     void InitializeMissions()
