@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 145027519}
   - component: {fileID: 145027518}
   - component: {fileID: 145027517}
+  - component: {fileID: 145027522}
   - component: {fileID: 145027521}
   m_Layer: 0
   m_Name: Sphere
@@ -306,10 +307,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 145027516}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1ec2cd33e5e79e47b71414c7bcfe681, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fbf0900777493349b758b4116cc621d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missionName: Rub Some Balls
+  IsInRange: 0
+  interactTextBox: {fileID: 898820173}
+  InteractAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 145027522}
+        m_TargetAssemblyTypeName: MainDoor, Assembly-CSharp
+        m_MethodName: OnExitHouse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &145027522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 145027516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87dc3ca59d38bab46803e2cda14442b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missionManager: {fileID: 649282133}
+  dayOneScene: House
+  dayTwoScene: House
+  dayThreeScene: House
 --- !u!1 &193718251
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,8 +587,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab828a4cb77a50849825c2c389680ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentMissionsText: {fileID: 898820175}
-  nextDayButton: {fileID: 524108184}
+  currentDayIndex: 0
+  currentDay:
+    dayName: 
+    missions: []
 --- !u!4 &649282134
 Transform:
   m_ObjectHideFlags: 0
@@ -819,7 +854,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ec2cd33e5e79e47b71414c7bcfe681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missionName: Talk To Stranger
 --- !u!136 &1161142078
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1114,7 +1148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ec2cd33e5e79e47b71414c7bcfe681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missionName: Go To Bed
 --- !u!65 &1410885149
 BoxCollider:
   m_ObjectHideFlags: 0
