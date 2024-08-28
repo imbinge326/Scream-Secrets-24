@@ -6,10 +6,10 @@ using UnityEngine.Events;
 public class PlayerInteraction : MonoBehaviour
 {
     public bool IsInRange;
-    public GameObject interactTextBox;
     public UnityEvent InteractAction;
     private KeyCode InteractKey = KeyCode.F;
     
+
     void Update()
     {
         if (IsInRange)
@@ -26,7 +26,6 @@ public class PlayerInteraction : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             IsInRange = true;
-            interactTextBox.SetActive(true);
             //Debug.Log("Player in range");
         }
     }
@@ -36,7 +35,6 @@ public class PlayerInteraction : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             IsInRange = false;
-            interactTextBox.SetActive(false);
             //Debug.Log("Player exit range");
         }
     }
