@@ -3467,7 +3467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsInRange: 0
-  text: {fileID: 264392608}
+  interactTextBox: {fileID: 264392608}
   InteractAction:
     m_PersistentCalls:
       m_Calls: []
@@ -4329,7 +4329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsInRange: 0
-  text: {fileID: 264392608}
+  interactTextBox: {fileID: 264392608}
   InteractAction:
     m_PersistentCalls:
       m_Calls:
@@ -7796,7 +7796,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsInRange: 0
-  text: {fileID: 264392608}
+  interactTextBox: {fileID: 264392608}
   InteractAction:
     m_PersistentCalls:
       m_Calls:
@@ -8104,8 +8104,6 @@ MonoBehaviour:
   currentDay:
     dayName: 
     missions: []
-  currentMissionsText: {fileID: 0}
-  nextDayButton: {fileID: 0}
 --- !u!4 &1770332585
 Transform:
   m_ObjectHideFlags: 0
@@ -8422,7 +8420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsInRange: 0
-  text: {fileID: 264392608}
+  interactTextBox: {fileID: 264392608}
   InteractAction:
     m_PersistentCalls:
       m_Calls:
