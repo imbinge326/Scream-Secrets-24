@@ -1,56 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Include the UI namespace
-using UnityEngine.SceneManagement; // Include the SceneManagement namespace
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MissionManagerSecond : MonoBehaviour
 {
     private List<Day> days = new List<Day>();
-    private int currentDayIndex = 1;      // Index to track the current day
-    private Day currentDay;               // Current day being processed
+    private int currentDayIndex = 1; // Index to track the current day
+    private Day currentDay; // Current day being processed
 
-    public Text currentMissionsText;      // Reference to the UI Text component for current missions
-    public Button nextDayButton;          // Reference to the UI Button for switching the day
-    public int nextSceneIndex; // Add a public string for the scene name to load
+    public Text currentMissionsText; // Reference to the UI Text component for current missions
+    public int nextSceneIndex; // Add a public int for the scene index to load
+    public MissionManager missionManager; // Reference to the MissionManager instance
+
+    public GameObject missionManagerObject; // Reference to the GameObject with MissionManager script
+    public GameObject missionManager3Object; // Reference to the GameObject with MissionManager3 script
 
     void Start()
     {
         // Initialize the days and missions
         InitializeMissions();
         StartDay(currentDayIndex);
-
-        // Ensure the button is set up to call the TriggerNextDay method
-        if (nextDayButton != null)
-        {
-            nextDayButton.onClick.AddListener(LoadNextScene);
-            nextDayButton.gameObject.SetActive(false);  // Hide the button initially
-        }
     }
 
     void Update()
     {
-        // Allow the player to switch to the next day by pressing 'N'
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-        //if (CanSwitchDay())
-        //{
-        //SwitchToNextDay();
-        //}
-        //else
-        //{
-        //Debug.Log("Complete all missions before switching to the next day.");
-        //}
-        //}
-
-        // Show the button if all missions are completed
-        if (nextDayButton != null && CanSwitchDay())
-        {
-            nextDayButton.gameObject.SetActive(true);  // Show the button when all missions are completed
-        }
-        else if (nextDayButton != null)
-        {
-            nextDayButton.gameObject.SetActive(false); // Hide the button if not all missions are completed
-        }
+        // Optionally, use this for debug purposes or other functionalities
     }
 
     void InitializeMissions()
@@ -89,51 +64,11 @@ public class MissionManagerSecond : MonoBehaviour
         {
             new Mission
             {
-                missionName = "Talk To Stranger",
-                description = "Time to face the real thing.",
-                objectives = new List<string> { "Talk To Stranger" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Rub Some Balls",
-                description = "You are too lonely, make friends with an inaminate object.",
-                objectives = new List<string> { "Rub Some Balls" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Go To Bed",
+                missionName = "Go Back",
                 description = "You're tired so why not?",
-                objectives = new List<string> { "Go To Bed" },
+                objectives = new List<string> { "Go Back" },
                 isCompleted = false
             }
-        });
-
-        InitializeDay("Day 4", new List<Mission>
-        {
-            new Mission
-            {
-                missionName = "Talk To Stranger",
-                description = "Time to face the real thing.",
-                objectives = new List<string> { "Talk To Stranger" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Rub Some Balls",
-                description = "You are too lonely, make friends with an inaminate object.",
-                objectives = new List<string> { "Rub Some Balls" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Go To Bed",
-                description = "You're tired so why not?",
-                objectives = new List<string> { "Go To Bed" },
-                isCompleted = false
-            }
-
         });
     }
 
@@ -165,7 +100,6 @@ public class MissionManagerSecond : MonoBehaviour
             if (!mission.isCompleted)
             {
                 Debug.Log($"Mission '{mission.missionName}' is now active.");
-                // Display mission objectives.
             }
         }
     }
@@ -175,15 +109,49 @@ public class MissionManagerSecond : MonoBehaviour
         Debug.Log($"Attempting to complete mission: {missionName}");
 
         Mission mission = currentDay.missions.Find(m => m.missionName == missionName);
+
         if (mission != null && !mission.isCompleted)
         {
-            mission.isCompleted = true;
-            Debug.Log($"Mission '{mission.missionName}' completed.");
-
-            // Check if all missions for the current day are completed
-            if (CanSwitchDay())
+            if (missionName == "Go Back" && (currentDay.missions.Count == 1 || CanSwitchDay()))
             {
-                Debug.Log($"All missions for {currentDay.dayName} completed.");
+                mission.isCompleted = true;
+                Debug.Log($"Mission '{mission.missionName}' completed.");
+
+                Debug.Log("Current mission statuses:");
+                foreach (var m in currentDay.missions)
+                {
+                    Debug.Log($"Mission '{m.missionName}' - Completed: {m.isCompleted}");
+                }
+
+                if (CanSwitchDay())
+                {
+                    Debug.Log($"All missions for {currentDay.dayName} completed.");
+                    HideAndShowMissionManagers();
+                    SwitchToNextDay();
+                }
+            }
+            else if (missionName == "Go Back")
+            {
+                Debug.Log("You must complete all other missions before going back.");
+                return;
+            }
+            else
+            {
+                mission.isCompleted = true;
+                Debug.Log($"Mission '{mission.missionName}' completed.");
+
+                Debug.Log("Current mission statuses:");
+                foreach (var m in currentDay.missions)
+                {
+                    Debug.Log($"Mission '{m.missionName}' - Completed: {m.isCompleted}");
+                }
+
+                if (CanSwitchDay())
+                {
+                    Debug.Log($"All missions for {currentDay.dayName} completed.");
+                    HideAndShowMissionManagers();
+                    SwitchToNextDay();
+                }
             }
         }
         else if (mission == null)
@@ -198,18 +166,28 @@ public class MissionManagerSecond : MonoBehaviour
         UpdateMissionUI(); // Update the mission text on UI after completing a mission
     }
 
-
     public bool IsMissionActive(string missionName)
     {
-        // Check if the mission is part of the current day's missions and is not completed
         Mission mission = currentDay.missions.Find(m => m.missionName == missionName);
         return mission != null && !mission.isCompleted;
     }
 
     bool CanSwitchDay()
     {
-        // Check if all missions for the current day are completed
         return currentDay.missions.TrueForAll(m => m.isCompleted);
+    }
+
+    void HideAndShowMissionManagers()
+    {
+        if (missionManagerObject != null)
+        {
+            missionManagerObject.SetActive(false); // Hide the current MissionManager
+        }
+
+        if (missionManager3Object != null)
+        {
+            missionManager3Object.SetActive(true); // Show MissionManager3
+        }
     }
 
     void SwitchToNextDay()
@@ -222,21 +200,26 @@ public class MissionManagerSecond : MonoBehaviour
         else
         {
             Debug.Log("No more days left.");
+            LoadNextScene();
         }
     }
 
-    //To switch scenes manually
-    void LoadNextScene()
+    public void LoadNextScene()
     {
-        if (CanSwitchDay()) // Ensure all missions for the current day are completed
+        Debug.Log("LoadNextScene method called.");
+        if (CanSwitchDay())
         {
+            Debug.Log($"Attempting to load scene with index: {nextSceneIndex}");
             if (nextSceneIndex >= 0 && nextSceneIndex < SceneManager.sceneCountInBuildSettings)
             {
+                // Save the current day index to PlayerPrefs before switching scenes
+                PlayerPrefs.SetInt("DayIndex", currentDayIndex);
+                PlayerPrefs.Save();
                 SceneManager.LoadScene(nextSceneIndex);
             }
             else
             {
-                Debug.LogError("Next scene name is not set.");
+                Debug.LogError("Next scene index is out of range or not set properly.");
             }
         }
         else
@@ -249,14 +232,12 @@ public class MissionManagerSecond : MonoBehaviour
     {
         if (currentMissionsText != null)
         {
-            // Check if all missions for today are completed
             if (CanSwitchDay())
             {
                 currentMissionsText.text = "All Missions Are Completed";
             }
             else
             {
-                // Display missions that are not yet completed
                 currentMissionsText.text = "Missions for Today:\n";
                 foreach (Mission mission in currentDay.missions)
                 {
@@ -270,6 +251,18 @@ public class MissionManagerSecond : MonoBehaviour
         else
         {
             Debug.LogWarning("currentMissionsText is not assigned.");
+        }
+    }
+
+    public void NotifyMissionManagerToSwitchDay()
+    {
+        if (missionManager != null)
+        {
+            missionManager.SwitchToNextDay();
+        }
+        else
+        {
+            Debug.LogError("MissionManager reference is not assigned.");
         }
     }
 }

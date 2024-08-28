@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Paul.unity
     guid: e21693214cc75364099898d9eecd0d83
+  - enabled: 1
+    path: Assets/Scenes/Gas station.unity
+    guid: 790312e397e99474d858b5c40f52fb25
   m_configObjects: {}

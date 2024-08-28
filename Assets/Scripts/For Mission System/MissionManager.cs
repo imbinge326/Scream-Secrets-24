@@ -1,144 +1,67 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Include the UI namespace
+using UnityEngine.UI;
 
 public class MissionManager : MonoBehaviour
 {
     private List<Day> days = new List<Day>();
-    public int currentDayIndex = 0;      // Index to track the current day
-    private Day currentDay;               // Current day being processed
+    public int currentDayIndex = 0; // Default to 0, but this will be set by PlayerPrefs
+    private Day currentDay;
 
-    public Text currentMissionsText;      // Reference to the UI Text component for current missions
-    public Button nextDayButton;          // Reference to the UI Button for switching the day
+    public Text currentMissionsText;
+    public Button nextDayButton;
 
     void Start()
     {
-        // Initialize the days and missions
-        InitializeMissions();
-        StartDay(currentDayIndex);
+        // Read day index from PlayerPrefs
+        currentDayIndex = PlayerPrefs.GetInt("DayIndex", 0);
 
-        // Ensure the button is set up to call the TriggerNextDay method
+        // Initialize missions here or call GameState to load the data
+        if (days.Count == 0)
+        {
+            Debug.LogWarning("Days list is empty. Ensure days are set by MissionManagerSecond.");
+        }
+
+        // Start the day based on the index set by MissionManagerSecond
+        if (days.Count > 0)
+        {
+            StartDay(currentDayIndex);
+        }
+
         if (nextDayButton != null)
         {
             nextDayButton.onClick.AddListener(TriggerNextDay);
-            nextDayButton.gameObject.SetActive(false);  // Hide the button initially
+            nextDayButton.gameObject.SetActive(false);
         }
     }
 
     void Update()
     {
-        // Allow the player to switch to the next day by pressing 'N'
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-        //if (CanSwitchDay())
-        //{
-        //SwitchToNextDay();
-        //}
-        //else
-        //{
-        //Debug.Log("Complete all missions before switching to the next day.");
-        //}
-        //}
-
-        // Show the button if all missions are completed
         if (nextDayButton != null && CanSwitchDay())
         {
-            nextDayButton.gameObject.SetActive(true);  // Show the button when all missions are completed
+            nextDayButton.gameObject.SetActive(true);
         }
         else if (nextDayButton != null)
         {
-            nextDayButton.gameObject.SetActive(false); // Hide the button if not all missions are completed
+            nextDayButton.gameObject.SetActive(false);
         }
     }
 
-    void InitializeMissions()
+    // Add GetDays method
+    public List<Day> GetDays()
     {
-        // Initialize missions for each day
-        InitializeDay("Day 1", new List<Mission>
-        {
-            new Mission
-            {
-                missionName = "Go To Bed",
-                description = "You're tired so why not?",
-                objectives = new List<string> { "Sleep" },
-                isCompleted = false
-            }
-        });
-
-        InitializeDay("Day 2", new List<Mission>
-        {
-            new Mission
-            {
-                missionName = "Rub Some Balls",
-                description = "You are too lonely, make friends with an inaminate object.",
-                objectives = new List<string> { "Rub Some Balls" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Go To Bed",
-                description = "You're tired so why not?",
-                objectives = new List<string> { "Go To Bed" },
-                isCompleted = false
-            }
-        });
-
-        InitializeDay("Day 3", new List<Mission>
-        {
-            new Mission
-            {
-                missionName = "Talk To Stranger",
-                description = "Time to face the real thing.",
-                objectives = new List<string> { "Talk To Stranger" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Rub Some Balls",
-                description = "You are too lonely, make friends with an inaminate object.",
-                objectives = new List<string> { "Rub Some Balls" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Go To Bed",
-                description = "You're tired so why not?",
-                objectives = new List<string> { "Go To Bed" },
-                isCompleted = false
-            }
-        });
-
-        InitializeDay("Day 4", new List<Mission>
-        {
-            new Mission
-            {
-                missionName = "Talk To Stranger",
-                description = "Time to face the real thing.",
-                objectives = new List<string> { "Talk To Stranger" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Rub Some Balls",
-                description = "You are too lonely, make friends with an inaminate object.",
-                objectives = new List<string> { "Rub Some Balls" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Go To Bed",
-                description = "You're tired so why not?",
-                objectives = new List<string> { "Go To Bed" },
-                isCompleted = false
-            }
-
-        });
+        return new List<Day>(days); // Return a copy of the list
     }
 
-    void InitializeDay(string dayName, List<Mission> missions)
+    // Add SetDays method
+    public void SetDays(List<Day> newDays)
     {
-        Day day = new Day { dayName = dayName, missions = missions };
-        days.Add(day);
+        days = new List<Day>(newDays); // Set the days list
+        // Optionally start the first day or handle other initialization here
+        if (days.Count > 0)
+        {
+            StartDay(currentDayIndex); // Start the day based on current index
+        }
     }
 
     void StartDay(int dayIndex)
@@ -148,7 +71,7 @@ public class MissionManager : MonoBehaviour
             currentDay = days[dayIndex];
             Debug.Log($"Starting day: {currentDay.dayName}");
             ActivateMissions(currentDay);
-            UpdateMissionUI(); // Update the mission text on UI
+            UpdateMissionUI();
         }
         else
         {
@@ -163,7 +86,6 @@ public class MissionManager : MonoBehaviour
             if (!mission.isCompleted)
             {
                 Debug.Log($"Mission '{mission.missionName}' is now active.");
-                // Display mission objectives.
             }
         }
     }
@@ -176,30 +98,27 @@ public class MissionManager : MonoBehaviour
             mission.isCompleted = true;
             Debug.Log($"Mission '{mission.missionName}' completed.");
 
-            // Check if all missions for the current day are completed
             if (CanSwitchDay())
             {
                 Debug.Log($"All missions for {currentDay.dayName} completed.");
             }
         }
 
-        UpdateMissionUI(); // Update the mission text on UI after completing a mission
+        UpdateMissionUI();
     }
 
     public bool IsMissionActive(string missionName)
     {
-        // Check if the mission is part of the current day's missions and is not completed
         Mission mission = currentDay.missions.Find(m => m.missionName == missionName);
         return mission != null && !mission.isCompleted;
     }
 
     bool CanSwitchDay()
     {
-        // Check if all missions for the current day are completed
         return currentDay.missions.TrueForAll(m => m.isCompleted);
     }
 
-    void SwitchToNextDay()
+    public void SwitchToNextDay()
     {
         currentDayIndex++;
         if (currentDayIndex < days.Count)
@@ -212,7 +131,6 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    //To switch days manually
     public void TriggerNextDay()
     {
         if (CanSwitchDay())
@@ -229,14 +147,12 @@ public class MissionManager : MonoBehaviour
     {
         if (currentMissionsText != null)
         {
-            // Check if all missions for today are completed
             if (CanSwitchDay())
             {
                 currentMissionsText.text = "All Missions Are Completed";
             }
             else
             {
-                // Display missions that are not yet completed
                 currentMissionsText.text = "Missions for Today:\n";
                 foreach (Mission mission in currentDay.missions)
                 {
