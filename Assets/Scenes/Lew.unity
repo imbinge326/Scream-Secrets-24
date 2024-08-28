@@ -554,6 +554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab828a4cb77a50849825c2c389680ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentDayIndex: 0
   currentMissionsText: {fileID: 898820175}
   nextDayButton: {fileID: 524108184}
 --- !u!4 &649282134
@@ -719,8 +720,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291085508
-  m_fontColor: {r: 0.7686275, g: 0.7686275, b: 0.7686275, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
