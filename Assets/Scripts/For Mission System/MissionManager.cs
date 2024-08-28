@@ -4,8 +4,8 @@ using UnityEngine;
 public class MissionManager : MonoBehaviour
 {
     private List<Day> days = new List<Day>();
-    private int currentDayIndex = 0;      // Index to track the current day
-    private Day currentDay;               // Current day being processed
+    public int currentDayIndex = 0;      // Index to track the current day
+    [SerializeField] private Day currentDay;               // Current day being processed
 
     void Start()
     {
@@ -16,6 +16,7 @@ public class MissionManager : MonoBehaviour
 
     void Update()
     {
+        
         // Allow the player to switch to the next day by pressing 'N'
         if (Input.GetKeyDown(KeyCode.N))
         {
@@ -28,6 +29,22 @@ public class MissionManager : MonoBehaviour
                 Debug.Log("Complete all missions before switching to the next day.");
             }
         }
+        
+
+        // Show the button if all missions are completed
+        /*
+        if (nextDayButton != null && CanSwitchDay())
+        {
+            if (CanSwitchDay())
+            {
+                SwitchToNextDay();
+            }
+            else
+            {
+                Debug.Log("Complete all missions before switching to the next day.");
+            }
+        }
+        */
     }
 
     void InitializeMissions()
