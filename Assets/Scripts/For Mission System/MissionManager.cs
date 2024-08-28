@@ -5,7 +5,7 @@ using UnityEngine.UI; // Include the UI namespace
 public class MissionManager : MonoBehaviour
 {
     private List<Day> days = new List<Day>();
-    public int currentDayIndex = 1;      // Index to track the current day
+    public int currentDayIndex = 0;      // Index to track the current day
     private Day currentDay;               // Current day being processed
 
     public Text currentMissionsText;      // Reference to the UI Text component for current missions
