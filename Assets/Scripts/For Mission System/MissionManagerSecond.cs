@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // Include the UI namespace
+using UnityEngine.SceneManagement; // Include the SceneManagement namespace
 
 public class MissionManagerSecond : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class MissionManagerSecond : MonoBehaviour
 
     public Text currentMissionsText;      // Reference to the UI Text component for current missions
     public Button nextDayButton;          // Reference to the UI Button for switching the day
+    public int nextSceneIndex; // Add a public string for the scene name to load
 
     void Start()
     {
@@ -20,7 +22,7 @@ public class MissionManagerSecond : MonoBehaviour
         // Ensure the button is set up to call the TriggerNextDay method
         if (nextDayButton != null)
         {
-            nextDayButton.onClick.AddListener(TriggerNextDay);
+            nextDayButton.onClick.AddListener(LoadNextScene);
             nextDayButton.gameObject.SetActive(false);  // Hide the button initially
         }
     }
@@ -69,16 +71,16 @@ public class MissionManagerSecond : MonoBehaviour
         {
             new Mission
             {
-                missionName = "Rub Some Balls",
-                description = "You are too lonely, make friends with an inaminate object.",
-                objectives = new List<string> { "Rub Some Balls" },
+                missionName = "Buy Any Canned Food",
+                description = "Eat Can Food.",
+                objectives = new List<string> { "Buy Any Canned Food" },
                 isCompleted = false
             },
             new Mission
             {
-                missionName = "Go To Bed",
+                missionName = "Get Coffee",
                 description = "You're tired so why not?",
-                objectives = new List<string> { "Go To Bed" },
+                objectives = new List<string> { "Get Coffee" },
                 isCompleted = false
             }
         });
@@ -170,6 +172,8 @@ public class MissionManagerSecond : MonoBehaviour
 
     public void CompleteMission(string missionName)
     {
+        Debug.Log($"Attempting to complete mission: {missionName}");
+
         Mission mission = currentDay.missions.Find(m => m.missionName == missionName);
         if (mission != null && !mission.isCompleted)
         {
@@ -182,9 +186,18 @@ public class MissionManagerSecond : MonoBehaviour
                 Debug.Log($"All missions for {currentDay.dayName} completed.");
             }
         }
+        else if (mission == null)
+        {
+            Debug.LogError($"Mission '{missionName}' not found for the current day.");
+        }
+        else if (mission.isCompleted)
+        {
+            Debug.LogWarning($"Mission '{missionName}' was already completed.");
+        }
 
         UpdateMissionUI(); // Update the mission text on UI after completing a mission
     }
+
 
     public bool IsMissionActive(string missionName)
     {
@@ -212,12 +225,19 @@ public class MissionManagerSecond : MonoBehaviour
         }
     }
 
-    //To switch days manually
-    public void TriggerNextDay()
+    //To switch scenes manually
+    void LoadNextScene()
     {
-        if (CanSwitchDay())
+        if (CanSwitchDay()) // Ensure all missions for the current day are completed
         {
-            SwitchToNextDay();
+            if (nextSceneIndex >= 0 && nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+            {
+                SceneManager.LoadScene(nextSceneIndex);
+            }
+            else
+            {
+                Debug.LogError("Next scene name is not set.");
+            }
         }
         else
         {
