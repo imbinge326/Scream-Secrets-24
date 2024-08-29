@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 460580450}
   - component: {fileID: 460580449}
   - component: {fileID: 460580448}
+  - component: {fileID: 460580452}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -322,6 +323,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &460580452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460580447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87dc3ca59d38bab46803e2cda14442b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endScene: Menu
 --- !u!1 &659004727
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,7 +418,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 659004730}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 460580452}
+        m_TargetAssemblyTypeName: MainDoor, Assembly-CSharp
+        m_MethodName: OnQuit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &659004730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1028,7 +1054,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1943924856}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 460580452}
+        m_TargetAssemblyTypeName: MainDoor, Assembly-CSharp
+        m_MethodName: OnExitHouse
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1943924856
 MonoBehaviour:
   m_ObjectHideFlags: 0
