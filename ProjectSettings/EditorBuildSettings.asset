@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Gas station.unity
     guid: 790312e397e99474d858b5c40f52fb25
+  - enabled: 1
+    path: Assets/Scenes/Basement.unity
+    guid: 4b5ba1b99d08ffb45b9035148786f31b
+  - enabled: 1
+    path: Assets/Scenes/House From Gas Station.unity
+    guid: 4b8651abfec7aa14493161b447d9e4c9
   m_configObjects: {}

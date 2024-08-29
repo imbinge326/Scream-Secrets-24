@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainDoor : MonoBehaviour
+public class MainDoorGas : MonoBehaviour
 {
-    public MissionManager missionManager;
+    public MissionManagerThird missionManager;
     public string dayOneScene, dayTwoScene, dayThreeScene;
 
     public void OnExitHouse()

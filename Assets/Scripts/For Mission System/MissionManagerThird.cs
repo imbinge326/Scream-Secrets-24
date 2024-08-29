@@ -5,7 +5,7 @@ using UnityEngine.UI; // Include the UI namespace
 public class MissionManagerThird : MonoBehaviour
 {
     private List<Day> days = new List<Day>();
-    private int currentDayIndex = 2;      // Index to track the current day
+    public int currentDayIndex = 2;      // Index to track the current day
     private Day currentDay;               // Current day being processed
 
     public Text currentMissionsText;      // Reference to the UI Text component for current missions
@@ -69,13 +69,6 @@ public class MissionManagerThird : MonoBehaviour
         {
             new Mission
             {
-                missionName = "Rub Some Balls",
-                description = "You are too lonely, make friends with an inaminate object.",
-                objectives = new List<string> { "Rub Some Balls" },
-                isCompleted = false
-            },
-            new Mission
-            {
                 missionName = "Go To Bed",
                 description = "You're tired so why not?",
                 objectives = new List<string> { "Go To Bed" },
@@ -87,23 +80,9 @@ public class MissionManagerThird : MonoBehaviour
         {
             new Mission
             {
-                missionName = "Talk To Stranger",
+                missionName = "Go To Park",
                 description = "Time to face the real thing.",
-                objectives = new List<string> { "Talk To Stranger" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Rub Some Balls",
-                description = "You are too lonely, make friends with an inaminate object.",
-                objectives = new List<string> { "Rub Some Balls" },
-                isCompleted = false
-            },
-            new Mission
-            {
-                missionName = "Go To Bed",
-                description = "You're tired so why not?",
-                objectives = new List<string> { "Go To Bed" },
+                objectives = new List<string> { "Go To Park" },
                 isCompleted = false
             }
         });

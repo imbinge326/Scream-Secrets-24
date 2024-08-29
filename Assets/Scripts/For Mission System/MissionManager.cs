@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class MissionManager : MonoBehaviour
 {
     private List<Day> days = new List<Day>();
-    public int currentDayIndex = 0; // Default to 0, but this will be set by PlayerPrefs
+    public int currentDayIndex = 0;
     private Day currentDay;
 
     public Text currentMissionsText;
@@ -13,20 +13,8 @@ public class MissionManager : MonoBehaviour
 
     void Start()
     {
-        // Read day index from PlayerPrefs
-        currentDayIndex = PlayerPrefs.GetInt("DayIndex", 0);
-
-        // Initialize missions here or call GameState to load the data
-        if (days.Count == 0)
-        {
-            Debug.LogWarning("Days list is empty. Ensure days are set by MissionManagerSecond.");
-        }
-
-        // Start the day based on the index set by MissionManagerSecond
-        if (days.Count > 0)
-        {
-            StartDay(currentDayIndex);
-        }
+        InitializeMissions();
+        StartDay(currentDayIndex);
 
         if (nextDayButton != null)
         {
@@ -47,21 +35,71 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    // Add GetDays method
-    public List<Day> GetDays()
+    void InitializeMissions()
     {
-        return new List<Day>(days); // Return a copy of the list
+        InitializeDay("Day 1", new List<Mission>
+        {
+            new Mission
+            {
+                missionName = "Go To Bed",
+                description = "You're tired so why not?",
+                objectives = new List<string> { "Sleep" },
+                isCompleted = false
+            }
+        });
+
+        InitializeDay("Day 2", new List<Mission>
+        {
+            new Mission
+            {
+                missionName = "Go To Gas Station",
+                description = "You are too lonely, make friends with an inanimate object.",
+                objectives = new List<string> { "Go To Gas Station" },
+                isCompleted = false
+            }
+        });
+
+        InitializeDay("Day 3", new List<Mission>
+        {
+            new Mission
+            {
+                missionName = "Go To Bed",
+                description = "You're tired so why not?",
+                objectives = new List<string> { "Go To Bed" },
+                isCompleted = false
+            }
+        });
+
+        InitializeDay("Day 4", new List<Mission>
+        {
+            new Mission
+            {
+                missionName = "Talk To Stranger",
+                description = "Time to face the real thing.",
+                objectives = new List<string> { "Talk To Stranger" },
+                isCompleted = false
+            },
+            new Mission
+            {
+                missionName = "Rub Some Balls",
+                description = "You are too lonely, make friends with an inanimate object.",
+                objectives = new List<string> { "Rub Some Balls" },
+                isCompleted = false
+            },
+            new Mission
+            {
+                missionName = "Go To Bed",
+                description = "You're tired so why not?",
+                objectives = new List<string> { "Go To Bed" },
+                isCompleted = false
+            }
+        });
     }
 
-    // Add SetDays method
-    public void SetDays(List<Day> newDays)
+    void InitializeDay(string dayName, List<Mission> missions)
     {
-        days = new List<Day>(newDays); // Set the days list
-        // Optionally start the first day or handle other initialization here
-        if (days.Count > 0)
-        {
-            StartDay(currentDayIndex); // Start the day based on current index
-        }
+        Day day = new Day { dayName = dayName, missions = missions };
+        days.Add(day);
     }
 
     void StartDay(int dayIndex)

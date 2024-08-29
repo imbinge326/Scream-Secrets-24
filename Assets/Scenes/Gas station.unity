@@ -3239,8 +3239,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentMissionsText: {fileID: 1160418261}
-  nextSceneIndex: 0
+  nextSceneIndex: 6
   missionManager: {fileID: 0}
+  missionManagerObject: {fileID: 0}
+  missionManager3Object: {fileID: 0}
 --- !u!4 &1825640986
 Transform:
   m_ObjectHideFlags: 0
