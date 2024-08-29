@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class MissionObject : MonoBehaviour
+public class MissionObject3 : MonoBehaviour
 {
     public string missionName; // The name of the mission this object is associated with
     public bool IsInRange;
@@ -19,7 +19,7 @@ public class MissionObject : MonoBehaviour
             if (Input.GetKeyDown(InteractKey))
             {
                 // Assuming the player has a tag "Player" and interacts with the object
-                MissionManager missionManager = FindObjectOfType<MissionManager>();
+                MissionManagerThird missionManager = FindObjectOfType<MissionManagerThird>();
                 if (missionManager != null)
                 {
                     missionManager.CompleteMission(missionName);
@@ -39,7 +39,7 @@ public class MissionObject : MonoBehaviour
             IsInRange = true;
             interactTextBox.SetActive(true);
 
-            
+
         }
     }
 
